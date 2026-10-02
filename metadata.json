@@ -1,0 +1,6 @@
+{
+  "name": "NEXUS BTC — Algorithmic Trading Terminal",
+  "description": "Professional BTCUSDT algorithmic trading and backtesting platform based on smart liquidity, market structure, displacement, and FVG detection.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

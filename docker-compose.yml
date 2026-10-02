@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://nexus:nexuspassword@postgres:5432/nexus_btc
+      - REDIS_URL=redis://redis:6379/0
+      - LIVE_TRADING=false
+      - RISK_PER_TRADE=0.005
+      - MAX_DAILY_LOSS=0.015
+      - MAX_TRADES_PER_DAY=3
+      - MAX_CONSECUTIVE_LOSSES=2
+    depends_on:
+      - postgres
+      - redis
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=nexus
+      - POSTGRES_PASSWORD=nexuspassword
+      - POSTGRES_DB=nexus_btc
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+volumes:
+  postgres_data:
